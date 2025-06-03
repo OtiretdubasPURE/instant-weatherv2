@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./favicon/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- FONT Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Kit -->
+    <script
+      src="https://kit.fontawesome.com/0acb75a9e8.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="./js/weatherCard.js"></script>
+    <script defer src="./js/app.js"></script>
+    <title>Instant Weather V2</title>
+  </head>
+  <body>
+    <header>
+      <h1>INSTANT WEATHER V2</h1>
+      <p>Votre météo en un clic</p>
+      <p>Choisissez votre commune et personnalisez vos prévisions</p>
+    </header>
+    
+    <main>
+      <section id="cityForm">
+        <form id="cityForm_form" action="dummy">
+          <!-- Code postal -->
+          <div class="input-group">
+            <label for="code-postal">Saisissez un code postal</label>
+            <input
+              type="text"
+              id="code-postal"
+              placeholder="Entrez un code postal (ex: 75001)..."
+              maxlength="5"
+            />
+          </div>
+
+          <!-- Sélection commune -->
+          <div class="input-group">
+            <label for="communeSelect" class="sr-only" aria-label="Choix de la commune">
+              Sélectionnez la commune
+            </label>
+            <select id="communeSelect" style="display: none;">
+              <option value="">Sélectionnez une commune</option>
+            </select>
+          </div>
+
+          <!-- Sélection nombre de jours -->
+          <div class="input-group">
+            <label for="daysRange">
+              Nombre de jours de prévision : <span id="daysValue">1</span>
+            </label>
+            <input
+              type="range"
+              id="daysRange"
+              min="1"
+              max="7"
+              value="1"
+              class="slider"
+            />
+            <div class="range-labels">
+              <span>1 jour</span>
+              <span>7 jours</span>
+            </div>
+          </div>
+
+          <!-- Options supplémentaires -->
+          <div class="input-group">
+            <fieldset>
+              <legend>Informations supplémentaires à afficher</legend>
+              <div class="checkbox-container">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="showLatitude" />
+                  <span>Latitude décimale de la commune</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="showLongitude" />
+                  <span>Longitude décimale de la commune</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="showRainfall" />
+                  <span>Cumul de pluie sur la journée en mm</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="showWind" />
+                  <span>Vent moyen à 10 mètres en km/h</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="showWindDirection" />
+                  <span>Direction du vent en degrés (0 à 360°)</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </form>
+        
+        <button id="validationButton" style="display: none;">
+          Obtenir les prévisions météo
+        </button>
+      </section>
+
+      <section id="weatherInformation">
+        <!-- Les cartes météo seront ajoutées ici dynamiquement -->
+      </section>
+
+      <div id="loadingSpinner" style="display: none;">
+        <p>Chargement des données météo...</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Instant Weather V2 - Données fournies par Météo Concept</p>
+    </footer>
+  </body>
+</html>
