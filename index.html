@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./favicon/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css" />
-    <!-- FONT Google -->
+    <!-- Import des polices Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Font Awesome Kit -->
+    <!-- Icônes Font Awesome -->
     <script
       src="https://kit.fontawesome.com/0acb75a9e8.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Scripts JavaScript -->
     <script defer src="./js/weatherCard.js"></script>
     <script defer src="./js/app.js"></script>
     <title>Instant Weather V2</title>
   </head>
   <body>
+    <!-- En-tête de l'application -->
     <header>
       <h1>INSTANT WEATHER V2</h1>
       <p>Votre météo en un clic</p>
@@ -29,9 +31,10 @@
     </header>
     
     <main>
+      <!-- Formulaire de saisie des données -->
       <section id="cityForm">
         <form id="cityForm_form" action="dummy">
-          <!-- Code postal -->
+          <!-- Saisie du code postal -->
           <div class="input-group">
             <label for="code-postal">Saisissez un code postal</label>
             <input
@@ -42,7 +45,7 @@
             />
           </div>
 
-          <!-- Sélection commune -->
+          <!-- Liste déroulante des communes -->
           <div class="input-group">
             <label for="communeSelect" class="sr-only" aria-label="Choix de la commune">
               Sélectionnez la commune
@@ -52,7 +55,7 @@
             </select>
           </div>
 
-          <!-- Sélection nombre de jours -->
+          <!-- Slider pour le nombre de jours -->
           <div class="input-group">
             <label for="daysRange">
               Nombre de jours de prévision : <span id="daysValue">1</span>
@@ -71,7 +74,7 @@
             </div>
           </div>
 
-          <!-- Options supplémentaires -->
+          <!-- Options d'affichage supplémentaires -->
           <div class="input-group">
             <fieldset>
               <legend>Informations supplémentaires à afficher</legend>
@@ -101,20 +104,24 @@
           </div>
         </form>
         
+        <!-- Bouton de validation -->
         <button id="validationButton" style="display: none;">
           Obtenir les prévisions météo
         </button>
       </section>
 
+      <!-- Zone d'affichage des cartes météo -->
       <section id="weatherInformation">
-        <!-- Les cartes météo seront ajoutées ici dynamiquement -->
+        <!-- Les cartes météo seront générées dynamiquement par JavaScript -->
       </section>
 
+      <!-- Indicateur de chargement -->
       <div id="loadingSpinner" style="display: none;">
         <p>Chargement des données météo...</p>
       </div>
     </main>
 
+    <!-- Pied de page -->
     <footer>
       <p>&copy; 2025 Instant Weather V2 - Données fournies par Météo Concept</p>
     </footer>

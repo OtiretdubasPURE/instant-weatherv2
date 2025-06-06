@@ -1,4 +1,4 @@
-// Sélection des éléments
+// Récupération des éléments du DOM
 const codePostalInput = document.getElementById("code-postal");
 const communeSelect = document.getElementById("communeSelect");
 const validationButton = document.getElementById("validationButton");
@@ -6,10 +6,10 @@ const daysRange = document.getElementById("daysRange");
 const daysValue = document.getElementById("daysValue");
 const loadingSpinner = document.getElementById("loadingSpinner");
 
-// Variables pour stocker les données de la commune sélectionnée
+// Variable globale pour stocker les données de la commune
 let selectedCommuneData = null;
 
-// Fonction pour effectuer la requête API des communes en utilisant le code postal
+// Fonction pour récupérer les communes via l'API gouvernementale
 async function fetchCommunesByCodePostal(codePostal) {
   try {
     const response = await fetch(
@@ -24,24 +24,25 @@ async function fetchCommunesByCodePostal(codePostal) {
   }
 }
 
-// Fonction pour afficher les communes dans la liste déroulante
+// Fonction pour remplir le select avec les communes trouvées
 function displayCommunes(data) {
   communeSelect.innerHTML = "";
   
-  // Supprimer un message d'erreur précédent s'il existe
+  // Suppression des messages d'erreur précédents
   const existingMessage = document.getElementById("error-message");
   if (existingMessage) {
     existingMessage.remove();
   }
 
-  // S'il y a au moins une commune retournée dans data
+  // Vérification si des communes ont été trouvées
   if (data.length) {
-    // Ajouter une option par défaut
+    // Option par défaut
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Sélectionnez une commune";
     communeSelect.appendChild(defaultOption);
     
+    // Création d'une option pour chaque commune
     data.forEach((commune) => {
       const option = document.createElement("option");
       option.value = commune.code;
@@ -51,31 +52,32 @@ function displayCommunes(data) {
       communeSelect.appendChild(option);
     });
     
+    // Affichage des éléments de sélection
     communeSelect.style.display = "block";
     validationButton.style.display = "block";
   } else {
-    // Afficher un message d'erreur
+    // Gestion du cas où aucune commune n'est trouvée
     const message = document.createElement("p");
     message.id = "error-message";
     message.textContent = "Le code postal saisi n'est pas valide";
     message.classList.add('errorMessage');
     document.body.appendChild(message);
 
-    // Masquer les éléments inutiles
+    // Masquage des éléments inutiles
     communeSelect.style.display = "none";
     validationButton.style.display = "none";
 
-    // Recharger la page après 3 secondes
+    // Rechargement automatique après 3 secondes
     setTimeout(() => location.reload(), 3000);
   }
 }
 
-// Fonction pour effectuer la requête API de météo
+// Fonction pour récupérer les données météo via l'API Météo Concept
 async function fetchMeteoByCommune(selectedCommune, days = 1) {
   try {
     const promises = [];
     
-    // Créer les requêtes pour chaque jour
+    // Création des requêtes pour chaque jour demandé
     for (let i = 0; i < days; i++) {
       const response = fetch(
         `https://api.meteo-concept.com/api/forecast/daily/${i}?token=1cac03e1610fdd7a957cb8384f3026b88c7edce10e946b03cc3181b4b4438e24&insee=${selectedCommune}`
@@ -83,7 +85,7 @@ async function fetchMeteoByCommune(selectedCommune, days = 1) {
       promises.push(response);
     }
     
-    // Attendre toutes les réponses
+    // Exécution parallèle de toutes les requêtes
     const responses = await Promise.all(promises);
     const dataPromises = responses.map(response => response.json());
     const allData = await Promise.all(dataPromises);
@@ -95,7 +97,7 @@ async function fetchMeteoByCommune(selectedCommune, days = 1) {
   }
 }
 
-// Fonction pour obtenir les options sélectionnées
+// Fonction pour récupérer les options cochées par l'utilisateur
 function getSelectedOptions() {
   return {
     showLatitude: document.getElementById("showLatitude").checked,
@@ -116,23 +118,24 @@ function getSelectedCommuneCoordinates() {
   };
 }
 
-// Mise à jour de l'affichage du nombre de jours
+// Gestion du slider pour le nombre de jours
 daysRange.addEventListener("input", () => {
   daysValue.textContent = daysRange.value;
 });
 
-// Ajout de l'écouteur d'événement "input" sur le champ code postal
+// Écouteur d'événement pour la saisie du code postal
 codePostalInput.addEventListener("input", async () => {
   const codePostal = codePostalInput.value;
   communeSelect.style.display = "none";
   validationButton.style.display = "none";
 
-  // Supprimer un message d'erreur précédent s'il existe
+  // Nettoyage des messages d'erreur précédents
   const existingMessage = document.getElementById("error-message");
   if (existingMessage) {
     existingMessage.remove();
   }
 
+  // Validation du format du code postal (5 chiffres)
   if (/^\d{5}$/.test(codePostal)) {
     try {
       const data = await fetchCommunesByCodePostal(codePostal);
@@ -146,29 +149,30 @@ codePostalInput.addEventListener("input", async () => {
   }
 });
 
-// Ajout de l'écouteur d'événement "click" sur le bouton de validation
+// Écouteur d'événement pour le bouton de validation
 validationButton.addEventListener("click", async () => {
   const selectedCommune = communeSelect.value;
   const numberOfDays = parseInt(daysRange.value);
   
   if (selectedCommune) {
-    // Afficher le spinner de chargement
+    // Affichage du spinner de chargement
     loadingSpinner.style.display = "block";
     
     try {
+      // Récupération des données météo
       const weatherData = await fetchMeteoByCommune(selectedCommune, numberOfDays);
       const selectedOptions = getSelectedOptions();
       const communeCoordinates = getSelectedCommuneCoordinates();
       
-      // Masquer le spinner
+      // Masquage du spinner
       loadingSpinner.style.display = "none";
       
-      // Créer les cartes météo
+      // Génération des cartes météo
       createWeatherCards(weatherData, selectedOptions, communeCoordinates);
     } catch (error) {
       console.error("Erreur lors de la requête API meteoConcept:", error);
       
-      // Masquer le spinner et afficher un message d'erreur
+      // Gestion de l'erreur avec message utilisateur
       loadingSpinner.style.display = "none";
       
       const errorMessage = document.createElement("p");

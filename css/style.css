@@ -1,4 +1,4 @@
-/* Variables CSS */
+/* Définition des couleurs et gradients */
 :root {
   --electric-blue: #00d4ff;
   --neon-purple: #b147ff;
@@ -22,7 +22,7 @@
   box-sizing: border-box;
 }
 
-/* Animations */
+/* Animations de base */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33% { transform: translateY(-10px) rotate(1deg); }
@@ -52,7 +52,7 @@
   50% { background-position: 100% 50%; }
 }
 
-/* Body et particules */
+/* Style principal du body avec effet de particules */
 body {
   font-family: 'Roboto', 'Comic Sans MS', cursive;
   background: var(--gradient-cosmic);
@@ -63,6 +63,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Effet de particules en arrière-plan */
 body::before {
   content: '';
   position: fixed;
@@ -82,7 +83,7 @@ body::before {
   z-index: -1;
 }
 
-/* Header */
+/* Header avec effets visuels */
 header {
   text-align: center;
   padding: 3rem 1rem;
@@ -136,7 +137,7 @@ main {
   position: relative;
 }
 
-/* Style commun pour formulaire et cartes météo */
+/* Styles pour les cartes principales */
 #cityForm, 
 .weather-card {
   background: rgba(255, 255, 255, 0.05);
@@ -150,6 +151,7 @@ main {
   overflow: hidden;
 }
 
+/* Effets de bordure animée */
 #cityForm::before, #cityForm::after,
 .weather-card::before, .weather-card::after {
   content: '';
@@ -190,6 +192,7 @@ main {
   border-color: var(--hot-pink);
 }
 
+/* Décalage d'animation pour les cartes multiples */
 .weather-card:nth-child(even) { animation-delay: -2s; }
 .weather-card:nth-child(3n) { animation-delay: -4s; }
 
@@ -200,7 +203,7 @@ main {
   margin-bottom: 3rem;
 }
 
-/* Inputs et labels */
+/* Groupes d'inputs */
 .input-group {
   margin-bottom: 2rem;
   position: relative;
@@ -217,16 +220,37 @@ main {
   letter-spacing: 1px;
 }
 
+/* Style des inputs et select - amélioration de la visibilité du select */
 input[type="text"], select {
   width: 100%;
   padding: 1rem 1.5rem;
   border: 2px solid var(--electric-blue);
   border-radius: 50px;
-  background: rgba(0, 212, 255, 0.1);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   font-size: 1.1rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+}
+
+/* Style spécifique pour le select des communes */
+select {
+  background: rgba(0, 0, 0, 0.85);
+  border: 3px solid var(--hot-pink);
+  box-shadow: 0 0 15px rgba(255, 20, 147, 0.4);
+  cursor: pointer;
+}
+
+select option {
+  background: rgba(10, 10, 35, 0.95);
+  color: white;
+  padding: 0.8rem;
+  border: none;
+}
+
+select option:hover, select option:checked {
+  background: var(--hot-pink);
+  color: white;
 }
 
 input[type="text"]:focus, select:focus {
@@ -241,7 +265,7 @@ input[type="text"]::placeholder {
   font-style: italic;
 }
 
-/* Slider */
+/* Slider personnalisé */
 .slider {
   width: 100%;
   height: 12px;
@@ -290,7 +314,7 @@ input[type="text"]::placeholder {
   text-shadow: 0 0 5px var(--lime-green);
 }
 
-/* Fieldset et checkboxes */
+/* Zone des options avec checkboxes */
 fieldset {
   border: 3px solid var(--neon-purple);
   border-radius: 20px;
@@ -365,7 +389,7 @@ legend {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-/* Boutons */
+/* Boutons principaux */
 #validationButton,
 #reloadButton, .reloadButton {
   background: var(--gradient-neon);
@@ -412,7 +436,7 @@ legend {
 
 #validationButton:active { transform: scale(0.95); }
 
-/* Éléments météo */
+/* Titres des cartes météo */
 .card-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -435,6 +459,7 @@ legend {
   font-weight: 600;
 }
 
+/* Informations météo principales */
 .main-weather-info {
   display: flex;
   align-items: center;
@@ -471,6 +496,7 @@ legend {
   text-shadow: 0 0 10px var(--electric-blue);
 }
 
+/* Grille des informations de base */
 .base-weather-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -498,6 +524,7 @@ legend {
   text-shadow: 0 0 10px var(--cyber-yellow);
 }
 
+/* Informations additionnelles */
 .additional-info {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -514,7 +541,7 @@ legend {
   text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
-/* Messages et loader */
+/* Loader et messages d'erreur */
 #loadingSpinner {
   text-align: center;
   padding: 3rem;
@@ -552,7 +579,7 @@ footer {
   margin-top: 3rem;
 }
 
-/* Responsive */
+/* Styles responsive */
 @media (max-width: 768px) {
   .weather-cards-container { grid-template-columns: 1fr; }
   .main-weather-info { flex-direction: column; text-align: center; }
